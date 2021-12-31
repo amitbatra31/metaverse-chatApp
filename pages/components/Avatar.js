@@ -7,7 +7,7 @@ function Avatar({ username, logoutOnPress }) {
     <div>
       <Image
         src={`https://avatars.dicebear.com/api/pixel-art/${
-          username || user.getUsername()
+          username || user.get("username")
         }.svg`}
         onClick={() => logoutOnPress && logout()}
         layout="fill"

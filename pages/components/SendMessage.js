@@ -13,7 +13,7 @@ function SendMessage({ endOfMessagesRef }) {
     messages
       .save({
         message: message,
-        username: user.getUsername(),
+        username: user.get("username"),
         ethAddress: user.get("ethAddress"),
       })
       .then(
