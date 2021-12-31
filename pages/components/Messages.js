@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ByMoralis, useMoralis, useMoralisQuery } from "react-moralis";
 import Message from "./Message";
 import SendMessage from "./SendMessage";
@@ -6,6 +6,12 @@ import SendMessage from "./SendMessage";
 const MINS_DURATION = 115;
 function Messages() {
   const { user } = useMoralis();
+  const [username, setUsername] = useState();
+
+  useEffect(() => {
+    if (!user) return null;
+    setUsername(user.get("username"));
+  }, [user]);
   const endOfMessagesRef = useRef(null);
   const { data, loading, error } = useMoralisQuery(
     "Messages",
@@ -39,7 +45,7 @@ function Messages() {
         <SendMessage endOfMessagesRef={endOfMessagesRef} />
       </div>
       <div ref={endOfMessagesRef} className="text-gray-400 text-center mt-5 ">
-        <p>You're up to date {user.getUsername()}</p>
+        <p>You're up to date {username}</p>
       </div>
     </div>
   );
