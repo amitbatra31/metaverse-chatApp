@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 
 // changed user settings
 function SendMessage({ endOfMessagesRef }) {
   const { user, Moralis } = useMoralis();
   const [message, setMessage] = useState();
-
+  const [username, setUsername] = useState();
+  useEffect(() => {
+    if (!user) return null;
+    setUsername(user.get("username"));
+  }, [user]);
   const sendMessage = (e) => {
     e.preventDefault();
     if (!message) return;
@@ -16,7 +20,7 @@ function SendMessage({ endOfMessagesRef }) {
     messages
       .save({
         message: message,
-        username: user.get("username"),
+        username: username,
         ethAddress: user.get("ethAddress"),
       })
       .then(
@@ -38,7 +42,7 @@ function SendMessage({ endOfMessagesRef }) {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder={`Enter a Message ${user.get("username")}`}
+        placeholder={`Enter a Message ${username}`}
       />
       <button
         type="submit"

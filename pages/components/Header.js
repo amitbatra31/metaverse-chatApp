@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import Image from "next/image";
 import Avatar from "./Avatar";
@@ -5,6 +6,12 @@ import ChangeUsername from "./ChangeUsername";
 
 function Header() {
   const { user } = useMoralis();
+  const [username, setUsername] = useState();
+
+  useEffect(() => {
+    if (!user) return null;
+    setUsername(user.get("username"));
+  }, [user]);
 
   return (
     <div className="sticky top-0 p-5 z-50 bg-black shadow-sm text-pink-400 border-b-2 border-pink-700 ">
@@ -22,9 +29,7 @@ function Header() {
             <Avatar logoutOnPress />
           </div>
           <h1 className="text-3xl">Welcome to the Metaverse</h1>
-          <h2 className="text-5xl font-bold truncate">
-            {user.get("username")}
-          </h2>
+          <h2 className="text-5xl font-bold truncate">{username}</h2>
           <ChangeUsername />
         </div>
       </div>
