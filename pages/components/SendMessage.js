@@ -35,7 +35,7 @@ function SendMessage({ endOfMessagesRef }) {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder={`Enter a Message ${user.getUsername()}`}
+        placeholder={`Enter a Message ${user.get("username")}`}
       />
       <button
         type="submit"
